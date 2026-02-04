@@ -1,5 +1,6 @@
 import app from "./app.js"
+const PORT = process.env.PORT || 3000;
 
-app.listen(9009,(err,data)=>{
+app.listen(PORT,(err,data)=>{
     console.log("Server Running")
 })
