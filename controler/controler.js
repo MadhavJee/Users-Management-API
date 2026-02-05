@@ -18,15 +18,50 @@ export const getUsers = (req, res)=>{
     
 };
 
+export const getUsersById = (req, res) => {
+  try {
+    const { id } = req.body;
+
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: "User id is required"
+      });
+    }
+
+    const user = users.find(user => user.id === id);
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found"
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      data: user
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+
+
 export const createUser = (req, res)=>{
     try{
-        const {name, email }= req.body;
-        if(!name||!email){
-            return res.status(400).json({
-                success:true,
-                message:"Name and email are required"
-            });
-        }
+      const { name, email } = req.body;
+        // const {name, email }= req.body;
+        // if(!name||!email){
+        //     return res.status(400).json({
+        //         success:true,
+        //         message:"Name and email are required"
+        //     });
         const newUser = {
             id: Date.now().toString(),
             name,
@@ -95,7 +130,8 @@ export const deleteUser = (req, res) => {
 
     res.status(200).json({
       success: true,
-      data: deletedUser[0]
+      data: deletedUser[0],
+      message:"User Deleated"
     });
 
   } catch (error) {
