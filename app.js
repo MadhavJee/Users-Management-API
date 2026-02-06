@@ -1,17 +1,27 @@
-import express from "express"
-import userRouter from "./routes/routes.js"
 
+import express from "express";
+import userRouter from "./routes/users.routes.js";
+import dotenv from "dotenv";
+import connectDB from "./config/db.js";
 const app = express();
 
-// Body Parse(JSON)
+
+dotenv.config();
+connectDB();
+// BODY PARSER (JSON)
+// app level middleware 
+
+// Controllers should NOT do everything.
+// Repeated logic goes into middlewares
+
 app.use(express.json());
 
-//Base Route
-app.get("/", (req, res)=>{
-    res.send("User Management API is Running");
+// BASE ROUTE
+app.get("/", (req, res) => {
+  res.send("User Management API is running");
 });
 
-// User Router
-app.use("/api/users",userRouter);
+// USER ROUTES
+app.use("/api/users", userRouter);
 
 export default app;
